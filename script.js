@@ -108,27 +108,19 @@ function createTable(){
 }
 
 
-function addBookToLibrary(title,author,pages,read){
-    
-
-}
 
 const button = document.createElement("button");
 button.textContent = "NEW BOOK";
 selector.appendChild(button);
 
-function generateLabelAndInput(form, labelName,inputName){
-    const label = document.createElement("label");
-    label.label = labelName;
-    label.textContent= labelName;
-    const input =document.createElement("input");
-    input.name=inputName;
-    form.appendChild(label);
-    form.appendChild(input);
+generateForm();
+const buttonlistener = button.addEventListener('click', showDiag);
+const diag = document.getElementById("formdiag");
 
-}
 
 function generateForm(){
+    const dialog = document.createElement("dialog");
+    dialog.id='formdiag';
     const form = document.createElement("form");
     form.action=  '';
     form.method = 'post';
@@ -142,16 +134,36 @@ function generateForm(){
     submitbutton.textContent="SUBMIT";
     form.appendChild(submitbutton);
 
-    selector.appendChild(form);
-
+    dialog.appendChild(form);
+    selector.appendChild(dialog);
+    
+    //diag is closed below
     const submitbuttonlistener = submitbutton.addEventListener('click', addObjs);
+
 
 }
 
-//add Book to table
+function showDiag(){
+    diag.showModal();
+}
+
+
+//so I don't have to be repetitive
+function generateLabelAndInput(form, labelName,inputName){
+    const label = document.createElement("label");
+    label.label = labelName;
+    label.textContent= labelName;
+    const input =document.createElement("input");
+    input.name=inputName;
+    form.appendChild(label);
+    form.appendChild(input);
+
+}
+
+//Once submit is hit from form, do the following below
 function addObjs(event){
     event.preventDefault(); //prevent button default
-    
+    diag.close();//close the diag before doing rest
     const findTable = document.querySelector("table");
     if (findTable){
         selector.removeChild(findTable);
@@ -166,15 +178,13 @@ function addObjs(event){
     library.push(x);
     createTable();
 
-    const findForm = document.querySelector("form");
-    if (findForm){
-        selector.removeChild(findForm);
-
-    }
+    // const findForm = document.querySelector("form");
+    // if (findForm){
+    //     selector.removeChild(findForm);
+    // }
 
 }
 
-const buttonlistener = button.addEventListener('click', generateForm);
 
 // createTable();
 
